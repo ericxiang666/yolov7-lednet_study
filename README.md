@@ -33,7 +33,7 @@ activate yolov7 -啟用環境
 cd /d D:\Yolov7\yolov7 -切換路徑   #因為anaconda裝在c槽，所以+/d  
 Pip install -r requirements.txt -下載附加套件  
 
-下載權重:
+下載權重:  
 yolov7資料夾底下新增一個新的資料夾weights,進到weights裡執行cmd  
 git clone https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7.pt  
 
@@ -50,6 +50,11 @@ git clone https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7.pt
 
 下載pytorch:  
 直接附上官方網址 --> https://pytorch.org/get-started/locally/  
+下圖皆為預設即可，並找到 Run this Command: pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu117  
+要更改指令最後/cu117，改為/cu102，將指令貼上anaconda prompt(記得切換好環境)  
+
+![image](https://github.com/ericxiang666/myyolov7_study/assets/89746072/ab3410b1-6aeb-4f4c-96ec-ea8dbe764be5)  
+
 
 
 最後直接執行 python detect.py  
