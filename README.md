@@ -92,6 +92,9 @@ _此error:AttributeError: module ‘distutils‘ has no attribute ‘version‘_
 
 標記訓練圖片 :  
 開啟cmd輸入labelimg，開啟標記程式  
+
+![image](https://github.com/ericxiang666/myyolov7_study/assets/89746072/7de2299c-57b8-48ac-878b-c9d6eecc2479)  
+
 (1)左邊第二點選open dir (開啟圖片存放資料夾，開啟前面提到的all資料夾)  
 (2)左邊第八點選標記格式，這邊選YOLO格式(txt)  
 (3)左邊第九點選creat rectbox (滑鼠左鍵拉方塊，框選圖片標記位置，命名標記名稱)。這裡筆者建議使用快捷鍵操作(W)  
@@ -99,12 +102,15 @@ _此error:AttributeError: module ‘distutils‘ has no attribute ‘version‘_
 (5)左邊第五點選Next Image ，下一張圖片繼續標記(D)  
 (6)反覆上述3~5步驟操作，標到結束。  
 查看all裡面，呈現的資料存放方式會是--> jpg、txt、jpg、txt、......依序排序下去，裡面會有一個classes.txt，是存放標記物的名稱  
+
+![image](https://github.com/ericxiang666/myyolov7_study/assets/89746072/9af2d232-903d-42e1-9489-7f5ba0fb0592)  
+
 回到訓練資料夾  
 使用splitFile.py (將all裡面的jpg和txt分開來，會得到兩個資料夾，images和labels)  
 使用creat_txt.py (建立train和val文字檔，作為data讀取位置，比較不會出錯)  
 
 準備訓練yaml檔 :  
-(1)./cfg/training/yolov7.yaml 複製到訓練用資料夾，更改檔案名稱-->yolov7-mask.yaml (這裡以配戴口罩為例，取名隨興)
+(1)./cfg/training/yolov7.yaml 複製到訓練用資料夾，更改檔案名稱-->yolov7-mask.yaml (這裡以配戴口罩為例，取名隨興)  
 (2)更改 yolov7-mask.yaml 裡面程式碼，只需找到nc=80更改為nc=2 (此句是標記物名稱有幾個)  
 (3)準備第二個yaml檔，./data/coco.yaml 複製到訓練用資料夾，更改檔案名稱，個人習慣取data,yaml  
 (4)更改 data.yaml 程式碼(以下述程式碼講解):  
