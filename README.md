@@ -10,7 +10,7 @@ HP Pavilion Gaming Laptop 17 (筆電)
 已安裝記憶體(RAM)	16.0 GB (15.8 GB 可用)  
 Windows 10 家用版
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---
 **& 環境建置 &**
 
 下載yolov7:  
@@ -50,10 +50,11 @@ git clone https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7.pt
 
 下載pytorch:  
 直接附上官方網址 --> https://pytorch.org/get-started/locally/  
-下圖皆為預設即可，並找到 Run this Command: pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu117  
-要更改指令最後/cu117，改為/cu102，將指令貼上anaconda prompt(記得切換好環境)  
+下圖皆為預設即可，並找到 pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu117  
+要更改指令最後/cu117，改為/cu102，將指令複製貼上anaconda prompt(記得切換好環境)  
 
-![image](https://github.com/ericxiang666/myyolov7_study/assets/89746072/ab3410b1-6aeb-4f4c-96ec-ea8dbe764be5)  
+![image](https://github.com/ericxiang666/myyolov7_study/assets/89746072/dfa7e7e3-e9f2-4978-8b4e-45633de609b3)  
+
 
 
 
@@ -61,9 +62,48 @@ git clone https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7.pt
 第一次執行會下載預訓練好的模型，下載好會預測放在 .\inference\images 的圖片，可以在 .\runs\detect\exp 看到預測結果  
 也可以用 python detect.py --source 指定要預測的圖片或影片路徑  
 
-本機cmd遇到的2個問題:  
+本機執行遇到的2個問題:  
 _此error:AttributeError: module ‘distutils‘ has no attribute ‘version‘_  
 (1)numpy要改版本->pip uninstall numpy->pip install numpy==1.23  
 (2)pip uninstall setuptools->pip install setuptools==59.5.0  
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---
+**& 訓練 &**  
+
+建立存放所有訓練檔案的資料夾(好整理):  
+創建圖片資料夾(命名all)-->放入訓練圖片(jpg)  
+
+標記訓練圖片:  
+開啟cmd輸入labelimg，開啟標記程式  
+(1)左邊第二點選open dir (開啟圖片存放資料夾，開啟前面提到的all資料夾)  
+(2)左邊第八點選標記格式，這邊選YOLO格式(txt)  
+(3)左邊第九點選creat rectbox (滑鼠左鍵拉方塊，框選圖片標記位置，命名標記名稱)。這裡筆者建議使用快捷鍵操作(W)  
+(4)左邊第七點選Save，儲存標記好圖片(CTRL+S)  
+(5)左邊第五點選Next Image ，下一張圖片繼續標記(D)  
+(6)反覆上述3~5步驟操作，標到結束。  
+查看all裡面，呈現的資料存放方式會是--> jpg、txt、jpg、txt、......依序排序下去，裡面會有一個classes.txt，是存放標記物的名稱  
+回到訓練資料夾  
+使用splitFile.py (將all裡面的jpg和txt分開來，會得到兩個資料夾，images和labels)  
+使用creat_txt.py (建立train和val文字檔，作為data讀取位置，比較不會出錯)  
+
+準備訓練yaml檔:  
+(1)./cfg/training/yolov7.yaml 複製到訓練用資料夾，更改檔案名稱-->yolov7-mask.yaml (這裡以配戴口罩為例，取名隨興)
+(2)更改 yolov7-mask.yaml 裡面程式碼，只需找到nc=80更改為nc=2 (此句是標記物名稱有幾個)  
+(3)準備第二個yaml檔，./data/coco.yaml 複製到訓練用資料夾，更改檔案名稱，個人習慣取data,yaml  
+(4)更改 data.yaml 程式碼(以下述程式碼講解):  
+
+	train: D:\yolov7\yolov7\mydataset\train.txt	#讀取訓練圖片位置  
+	val: D:\yolov7\yolov7\mydataset\val.txt		#讀取驗證圖片位置  
+
+	nc: 2		#有兩個標記物  
+	names: ['mask', 'no-mask']	#標記物名稱  
+
+總結:標記好的圖片、兩個yaml檔、存放路徑文字檔  
+
+_訓練指令_  
+python train.py --workers 4 --device 0 --batch-size 8 --data mydataset/data.yaml --img 640 640 --cfg mydataset/yolov7-mask.yaml --weights yolov7.pt --hyp data/hyp.scratch.p5.yaml --epoch 1000  
+
+_指令補充_  
+batch指的就是一批要多少訓練樣本  
+subdivisions是用來細分一次放多少樣本到記憶體中，例:batch=64，subdivisions=16-->可以一次放入 4 張圖片 （64/16）  
+參考網址 : https://ithelp.ithome.com.tw/articles/10267031  
