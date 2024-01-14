@@ -155,4 +155,4 @@ Google 搜尋 Google Colab :
 2.  
 ![image](https://github.com/ericxiang666/yolov7-lednet_study/assets/89746072/ff764fd0-1f0e-4103-a366-0f5a8349e4cb)  
 
-掛階雲端硬碟 :  
+掛接雲端硬碟 :  
