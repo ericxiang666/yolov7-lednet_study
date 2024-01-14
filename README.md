@@ -134,7 +134,7 @@ subdivisions是用來細分一次放多少樣本到記憶體中，例:batch=64�
 ---
 **&Google Colab&**
 
-本段要介紹的是Google Colab，是免費且有高算力的線上平台，免費版本T4 GPU使用時間8小時，有需要更高算力則要升級付費，接下來開始講解使用方式。  
+本段要介紹的是Google Colab，免費版本T4 GPU使用時間8小時，有需要更高算力則要升級付費，接下來開始講解使用方式。  
 
 Google 搜尋 Google Colab :  
 1.  
@@ -142,3 +142,16 @@ Google 搜尋 Google Colab :
 2.  
 ![image](https://github.com/ericxiang666/yolov7-lednet_study/assets/89746072/ce3914e7-00e8-4189-822e-ef4b77ca7a19)  
 
+新增筆記本 :  
+1.  
+![image](https://github.com/ericxiang666/yolov7-lednet_study/assets/89746072/6fd423b7-3f1c-49d4-9518-680d26488d39)  
+2.左上角重新命名筆記本  
+![image](https://github.com/ericxiang666/yolov7-lednet_study/assets/89746072/4864d4bb-31d9-4fd4-b32b-a2f2d560dc8f)  
+
+選擇T4 GPU並連線 :  
+1.  
+![image](https://github.com/ericxiang666/yolov7-lednet_study/assets/89746072/39888d9a-93ad-4f50-ab5b-58ae35b96951)
+2.  
+![image](https://github.com/ericxiang666/yolov7-lednet_study/assets/89746072/ff764fd0-1f0e-4103-a366-0f5a8349e4cb)  
+
+掛階雲端硬碟 :  
