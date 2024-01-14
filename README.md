@@ -134,10 +134,10 @@ subdivisions是用來細分一次放多少樣本到記憶體中，例:batch=64�
 ---
 **&Google Colab&**
 
-本段要介紹的是Google Colab，是免費且有高算力的線上平台，免費版本T4 GPU使用時間8小時，有需要更高算力則要升級付費，接下來開始講解使用方式。　　
-Google 搜尋 Google Colab :　　
-１．　　
-![image](https://github.com/ericxiang666/yolov7-lednet_study/assets/89746072/47178258-2194-49d6-bdaf-6fc00ae85279)
-２．　　
-![image](https://github.com/ericxiang666/yolov7-lednet_study/assets/89746072/ce3914e7-00e8-4189-822e-ef4b77ca7a19)
+本段要介紹的是Google Colab，是免費且有高算力的線上平台，免費版本T4 GPU使用時間8小時，有需要更高算力則要升級付費，接下來開始講解使用方式。  
+Google 搜尋 Google Colab :  
+1.  
+![image](https://github.com/ericxiang666/yolov7-lednet_study/assets/89746072/47178258-2194-49d6-bdaf-6fc00ae85279)  
+2.  
+![image](https://github.com/ericxiang666/yolov7-lednet_study/assets/89746072/ce3914e7-00e8-4189-822e-ef4b77ca7a19)  
 
