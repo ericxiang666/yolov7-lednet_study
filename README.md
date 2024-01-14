@@ -145,12 +145,13 @@ Google 搜尋 Google Colab :
 新增筆記本 :  
 1.  
 ![image](https://github.com/ericxiang666/yolov7-lednet_study/assets/89746072/6fd423b7-3f1c-49d4-9518-680d26488d39)  
-2.左上角重新命名筆記本  
+2.  
+左上重新命名  
 ![image](https://github.com/ericxiang666/yolov7-lednet_study/assets/89746072/4864d4bb-31d9-4fd4-b32b-a2f2d560dc8f)  
 
 選擇T4 GPU並連線 :  
 1.  
-![image](https://github.com/ericxiang666/yolov7-lednet_study/assets/89746072/39888d9a-93ad-4f50-ab5b-58ae35b96951)
+![image](https://github.com/ericxiang666/yolov7-lednet_study/assets/89746072/39888d9a-93ad-4f50-ab5b-58ae35b96951)  
 2.  
 ![image](https://github.com/ericxiang666/yolov7-lednet_study/assets/89746072/ff764fd0-1f0e-4103-a366-0f5a8349e4cb)  
 
