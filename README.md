@@ -148,7 +148,7 @@ Google 搜尋 Google Colab :
 2.  
 左上重新命名  
 ![image](https://github.com/ericxiang666/yolov7-lednet_study/assets/89746072/4864d4bb-31d9-4fd4-b32b-a2f2d560dc8f)  
-
+****
 選擇T4 GPU並連線 :  
 1.  
 ![image](https://github.com/ericxiang666/yolov7-lednet_study/assets/89746072/39888d9a-93ad-4f50-ab5b-58ae35b96951)  
