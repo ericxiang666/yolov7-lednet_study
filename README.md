@@ -148,11 +148,22 @@ Google 搜尋 Google Colab :
 2.  
 左上重新命名  
 ![image](https://github.com/ericxiang666/yolov7-lednet_study/assets/89746072/4864d4bb-31d9-4fd4-b32b-a2f2d560dc8f)  
-****
-選擇T4 GPU並連線 :  
+
+選擇T4 GPU並連線(掛接雲端硬碟) :  
 1.  
 ![image](https://github.com/ericxiang666/yolov7-lednet_study/assets/89746072/39888d9a-93ad-4f50-ab5b-58ae35b96951)  
 2.  
 ![image](https://github.com/ericxiang666/yolov7-lednet_study/assets/89746072/ff764fd0-1f0e-4103-a366-0f5a8349e4cb)  
+3.  
+/content/drive/MyDrive/yolov7 <-- 這裡點開就看到yolov7檔案  
+![image](https://github.com/ericxiang666/yolov7-lednet_study/assets/89746072/0d28fe90-11f6-4348-92ba-f88c17c10b1b)  
 
-掛接雲端硬碟 :  
+編輯程式與運行 :  
+1.  
+/content/drive/MyDrive/yolov7/detect.py <-- 此程式點開顯示在畫面右邊可進行編輯  
+![image](https://github.com/ericxiang666/yolov7-lednet_study/assets/89746072/6f1e7cb9-bc98-4934-a8f0-793d56bb3890)  
+2.
+中間畫面運行  
+%cd /content/drive/MyDrive/yolov7 <-- 切換資料夾  
+!python detect.py --weights weights/yolov7.pt --conf 0.3 --source peo.jpeg  運行程式  
+![image](https://github.com/ericxiang666/yolov7-lednet_study/assets/89746072/6be21eac-2ffe-4431-ae84-c93fd68f6f1e)  
