@@ -161,7 +161,7 @@ Google 搜尋 Google Colab :
 編輯程式與運行 :  
 1.  
 /content/drive/MyDrive/yolov7/detect.py <-- 此程式點開顯示在畫面右邊可進行編輯  
-![image](https://github.com/ericxiang666/yolov7-lednet_study/assets/89746072/6f1e7cb9-bc98-4934-a8f0-793d56bb3890)  
+![image](https://github.com/ericxiang666/yolov7-lednet_study/assets/89746072/cd5de35f-767f-441b-ac0e-8e0f5aef6b91)    
 2.  
 中間畫面運行  
 %cd /content/drive/MyDrive/yolov7 <-- 切換資料夾  
