@@ -162,8 +162,10 @@ Google 搜尋 Google Colab :
 1.  
 /content/drive/MyDrive/yolov7/detect.py <-- 此程式點開顯示在畫面右邊可進行編輯  
 ![image](https://github.com/ericxiang666/yolov7-lednet_study/assets/89746072/6f1e7cb9-bc98-4934-a8f0-793d56bb3890)  
-2.
+2.  
 中間畫面運行  
 %cd /content/drive/MyDrive/yolov7 <-- 切換資料夾  
 !python detect.py --weights weights/yolov7.pt --conf 0.3 --source peo.jpeg  運行程式  
 ![image](https://github.com/ericxiang666/yolov7-lednet_study/assets/89746072/6be21eac-2ffe-4431-ae84-c93fd68f6f1e)  
+
+---
