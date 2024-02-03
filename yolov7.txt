@@ -1,0 +1,167 @@
+我(筆者)的電腦備配:GTX1650Ti 4GB / RAM 16GB
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+& 環境建置 &
+
+下載yolov7:
+在D槽新建名為yolov7資料夾
+在此資料夾執行cmd，git clone https://github.com/WongKinYiu/yolov7
+
+下載anaconda -->一路next到安裝完成
+手動加入anaconda環境變數:設定-->關於-->進階系統設定-->環境變數-->系統變數往下拉找到path點進去-->我的變數增加4個:
+C:\Users\eric\anaconda3
+C:\Users\eric\anaconda3\Library\bin
+C:\Users\eric\anaconda3\Library\mingw-w64\bin
+C:\Users\eric\anaconda3\Scripts
+
+打開anaconda prompt(win鍵後在anaconda3資料夾打開裡面)，開始以下操作:
+
+conda install git
+conda install pip
+
+conda create --name yolov7 python=3.9 -建立python3.9環境(盡量不使用3.10)
+activate yolov7 -啟用環境
+cd /d D:\yolov7\yolov7 -切換路徑   #因為anaconda裝在c槽，所以+/d
+Pip install -r requirements.txt -下載附加套件
+
+下載權重
+https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7.pt
+yolov7資料夾底下開一個新的資料夾weights,將yolov7.pt放在資料夾內
+
+下載cuda
+去NVIDIA 官方網站下載對應顯卡的CUDA Tool   #本機使用cuda10.2 
+https://developer.nvidia.com/cuda-toolkit-archive
+下載 > 安裝 > C:\Program Files\NVIDIA GPU Computing Toolkit ( 安裝成功會看到這個資料夾 )
+ 
+下載cuDNN
+依據自己的cuda版本去官網>登陸(申請帳號)>下載對應的版本(10.2)
+下載下來後,解壓縮,你可以看到一個資料夾,將資料夾裡面的三個資料夾 (bin,include,lib) 
+覆蓋到 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2 裡面去
+
+下載pytorch
+最後安裝pytorch,這一樣有版本的問題,所以我們前往pytorch的官方網站(https://pytorch.org/get-started/locally/),並且找到CUDA(版本)>複製指令
+我們只需要那邊開始的指令就夠了,回到anaconda的那個視窗 > 貼上這行指令 (pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu102)   #cu102根據自己cuda版本
+
+最後直接執行 python detect.py
+第一次執行會下載預訓練好的模型，下載好會預測放在 .\inference\images 的圖片，可以在 .\runs\detect\exp 看到預測結果
+也可以用 –source 指定要預測的圖片或影片 python detect.py --source 圖片或影片的路徑
+
+本機遇到的2個問題:
+*此error:AttributeError: module ‘distutils‘ has no attribute ‘version‘
+(1)numpy要改版本->pip uninstall numpy->pip install numpy==1.23
+(2)pip uninstall setuptools->pip install setuptools==59.5.0
+
+使用 nvidia-smi 指令來查看驅動及CUDA版本
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+& 訓練 &
+
+建立存放所有訓練檔案的資料夾(好整理):
+創建圖片資料夾(筆者命名all)-->放入訓練圖片(jpg)
+
+標記訓練圖片:
+開啟cmd輸入labelimg，開啟標記程式:
+(1)左邊第二點選open dir (開啟圖片存放資料夾，筆者開啟前面提到的all資料夾)
+(2)左邊第八點選標記格式，這邊選YOLO格式(txt)
+(3)左邊第九點選creat rectbox (滑鼠左鍵拉方塊，框選圖片標記位置，命名標記名稱)。這裡筆者建議使用快捷鍵操作(W)
+(4)左邊第七點選Save，儲存標記好圖片(CTRL+S)
+(5)左邊第五點選Next Image ，下一張圖片繼續標記(D)
+(6)反覆上述3~5步驟操作，標到結束。
+查看all裡面，呈現的資料存放方式會是--> jpg、txt、jpg、txt、......依序排序下去，裡面會有一個classes.txt，是存放標記物的名稱
+回到訓練資料夾
+使用splitFile.py (將all裡面的jpg和txt分開來，會得到兩個資料夾，images和labels)
+使用creat_txt.py (筆者習慣建立train和val文字檔，作為data讀取位置，比較不會出錯)
+
+準備訓練yaml檔:
+(1)yolov7/cfg/training/yolov7.yaml複製到訓練用資料夾，更改檔案名稱-->yolov7-mask.yaml (這裡以配戴口罩為例，取名隨興)
+(2)更改yolov7-mask.yaml裡面程式碼，只需找到nc=80更改為nc=2 (此句是標記物名稱有幾個)
+(3)準備第二個yaml檔，yolov7/data/coco.yaml複製到訓練用資料夾，更改檔案名稱，筆者習慣取data,yaml
+(4)更改data.yaml程式碼(筆者以下述程式碼講解):
+
+	train: D:\yolov7\yolov7\mydataset\train.txt	#讀取訓練圖片位置
+	val: D:\yolov7\yolov7\mydataset\val.txt		#讀取驗證圖片位置
+
+	nc: 2		#有兩個標記物
+	names: ['mask', 'no-mask']	#標記物名稱
+
+總結:標記好的圖片、兩個yaml檔、存放路徑文字檔
+
+*訓練指令
+python train.py --workers 4 --device 0 --batch-size 16 --data photography/data.yaml --img 480 480 --cfg photography/yolov7.yaml --weights weights/yolov7.pt --hyp data/hyp.scratch.p5.yaml --epoch 200
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+& 電腦終端機指令 $
+
+*辨識指令
+python detect.py --weights yolov7.pt --conf 0.5 --source 0 --view-img	#鏡頭檢測
+python detect.py --weights best.pt --conf 0.5 --source inference/videos/test.mp4 --view-img	#影片檢測
+python detect.py --weights yolov7.pt --conf 0.5 --source inference/images/test.jpg --view-img	#圖片檢測
+
+
+*訓練指令
+python train.py --workers 4 --device 0 --batch-size 8 --data mydataset-new/data.yaml --img 640 640 --cfg cfg/training/yolov7-mask.yaml --weights yolov7.pt --hyp data/hyp.scratch.p5.yaml --epoch 1000
+
+
+*檢查torch有沒有抓到gpu
+python
+import torch
+torch.cuda.is_available()
+exit()
+
+
+activate yolov7
+cd /d D:\yolov7\yolov7
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+& 樹梅派opencv和pytorch安裝 &
+
+參考本影片:https://www.youtube.com/watch?v=cCnrnt86Rak&t=633s
+
+下載opencv、pytorch安裝包:
+github連結:https://github.com/freedomwebtech/yolov5raspberry-pi4 -->綠色code鍵-->複製代碼-->開啟pi終端機-->sudo git clone https://github.com/freedomwebtech/yolov5raspberry-pi4.git-->進入文件位置 cd yolov5raspberry-pi4 -->ls install.sh-->sudo chmod 775 install.sh-->ls(文件呈現綠色代表成功運行)-->sudo ./install.sh
+完成以上步驟就有opencv和pytorch
+
+接下來安裝yolo，影片作者安裝yolov5，經實測是可以成功安裝，所以筆者這裡改試安裝yolov7，照之前上面方式可以成功運行。以下是操作:
+打開終端機-->sudo mkdir [name] (放所有yolo用到的資料)-->cd /[name]-->下載yolov7 sudo git clone https://github.com/WongKinYiu/yolov7-->cd /[name]/yolov7-->下載權重 sudo git clone https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7.pt
+
+完成，使用上面提到的detect指令進行辨識。
+訓練自定義模型要在電腦上完成，再將權重檔放入樹梅派即可。
+
+*sudo是樹梅派權限許可。
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+& 附件補充 &
+
+出處:https://ithelp.ithome.com.tw/articles/10267031
+batch指的就是一批要多少訓練樣本
+subdivisions是用來細分一次放多少樣本到記憶體中
+例:batch=64，subdivisions=16-->可以一次放入 4 張圖片 （64/16）
+
+訓練曲線圖解析 : https://blog.csdn.net/u012254599/article/details/128443417
+
+yolo訓練tips : https://codingonmac.blogspot.com/2021/07/yolo.html
+
+https://github.com/VisDrone/DroneCrowd
+
+yolov7.yaml文件详解 : https://blog.csdn.net/weixin_43397302/article/details/126708227
+
+YOLO V7算法train.py代码解析 : https://blog.csdn.net/weixin_42206075/article/details/126011864
+
+準確率和召回率 : https://en.wikipedia.org/wiki/Precision_and_recall
+
+yolov3論文 : https://pjreddie.com/publications/
+
+準確率、精確率、召回率、F1分數 : https://kknews.cc/zh-tw/tech/v5qpyey.html
+
+yolov5結果解析 : https://blog.csdn.net/Yonggie/article/details/126892359
+
+yolov7訓練解析 : https://blog.csdn.net/weixin_43397302/article/details/127073824
+
+Validation Graph 意義 : https://hackmd.io/@Ds1111/BJiUccQEj
+
+機器學習模型評估指標Medium : https://medium.com/@s716419/%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92%E6%A8%A1%E5%9E%8B%E8%A9%95%E4%BC%B0%E6%8C%87%E6%A8%99-confusion-matrix-precision-and-recall-e9d64ff14d81
+
+https://blog.csdn.net/zhangdaoliang1/article/details/125731979
+
+yolov7-tiny瘦身 : https://blog.csdn.net/yjcccccc/article/details/128329579
+
+conv+bn+relu组合详解代码示例 : https://blog.csdn.net/weixin_41917928/article/details/131226360
