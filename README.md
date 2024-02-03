@@ -1,7 +1,7 @@
 # myyolov7_study，我的yolov7學習紀錄  
 
 ---
-本篇文章程式大量使用下列兩個來源:  
+**本篇文章程式大量使用下列兩個來源:**  
 (1)https://github.com/WongKinYiu/yolov7  
 (2)https://github.com/sczhou/LEDNet  
 詳細環境建置請見上面來源!  
